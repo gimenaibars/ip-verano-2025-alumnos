@@ -1,5 +1,6 @@
 # capa de servicio/lógica de negocio
 
+import random     #ealiza una seleccion de forma aleatoria
 from ..transport import transport
 from ..persistence import repositories
 from ..utilities import translator
@@ -12,11 +13,36 @@ def getAllImages():
     # 2) convertir cada img. en una card.
     # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
     # ATENCIÓN: contemplar que los nombres alternativos, para cada personaje, deben elegirse al azar. Si no existen nombres alternativos, debe mostrar un mensaje adecuado.
+    
+    raw_images = transport.getAllImages() 
+    card_list = []
+    for img in raw_images:
+            card = {
+                "id": img.get("id"),
+                "name": img.get("name"), 
+                "alternate_names": random.choice(img.get("alternate_names", []) or ["Nombre desconocido"]),
+                "gender": img.get("gender"),
+                "house": img.get("house", "Desconocida"),
+                "image": img.get("image"),
+                "actor": img.get("actor"),
+            }
+            card_list.append(card)
+
+    return card_list 
+
     pass
 
 # función que filtra según el nombre del personaje.
 def filterByCharacter(name):
+    all_images = getAllImages()  # Obtiene todas las imágenes de transport.py
     filtered_cards = []
+
+    # Filtramos las imágenes que contienen el nombre ingresado, ignorando mayúsculas/minúsculas
+    for img in all_images:
+        if name.lower() in img['name'].lower():  # Compara el nombre de la imagen con el nombre ingresado
+            filtered_cards.append(img)
+
+    return filtered_cards
 
     for card in getAllImages():
         # debe verificar si el name está contenido en el nombre de la card, antes de agregarlo al listado de filtered_cards.
@@ -26,13 +52,15 @@ def filterByCharacter(name):
 
 # función que filtra las cards según su casa.
 def filterByHouse(house_name):
+    all_images = getAllImages() #obtiene todas las imagenes de transport.py
     filtered_cards = []
 
-    for card in getAllImages():
-        # debe verificar si la casa de la card coincide con la recibida por parámetro. Si es así, se añade al listado de filtered_cards.
-        filtered_cards.append(card)
+    for card in all_images:
+        if card.get('house') == house_name:  # Si la casa de la imagen coincide con la casa proporcionada
+            filtered_cards.append(card)  # Agrega la imagen a la lista de filtradas
 
-    return filtered_cards
+    return filtered_cards  # Devuelve la lista de imágenes filtradas
+
 
 # añadir favoritos (usado desde el template 'home.html')
 def saveFavourite(request):
