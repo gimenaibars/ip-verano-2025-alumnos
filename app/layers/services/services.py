@@ -44,12 +44,6 @@ def filterByCharacter(name):
 
     return filtered_cards
 
-    for card in getAllImages():
-        # debe verificar si el name está contenido en el nombre de la card, antes de agregarlo al listado de filtered_cards.
-        filtered_cards.append(card)
-
-    return filtered_cards
-
 # función que filtra las cards según su casa.
 def filterByHouse(house_name):
     all_images = getAllImages() #obtiene todas las imagenes de transport.py
