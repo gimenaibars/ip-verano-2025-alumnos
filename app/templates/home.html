@@ -31,7 +31,13 @@
         {% else %} {% for img in images %}
         <div class="col">
             <!-- evaluar si la imagen pertenece a Gryffindor, Slytherin u otro -->
-            <div class="card border-success mb-3 ms-5" style="max-width: 540px;">
+            {% if img.house == "Gryffindor" %}
+            <div class="card border-success mb-3 ms-5" style="max-width: 540px; border-width: 4px;"> <!-- Muestra borde Verde 4px de ancho -->
+            {% elif img.house == "Slytherin" %}
+            <div class="card border-danger mb-3 ms-5" style="max-width: 540px; border-width: 4px"> <!-- Muestra borde Rojo 4px de ancho  -->
+            {% else %}
+            <div class="card border-warning mb-3 ms-5" style="max-width: 540px; border-width: 4px"> <!-- Muestra bore Naranja 4px de ancho -->
+            {% endif %}
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="{{ img.image }}" class="card-img-top" alt="imagen">
