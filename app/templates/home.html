@@ -31,8 +31,17 @@
         <form method="post" action="{% url 'filter_by_house' %}">
             {% csrf_token %}
             <input type="hidden" name="house" value="Gryffindor">
-            <button type="submit" class="btn btn-primary">SOLO Gryffindor</button>
+            <button type="submit" class="btn btn-primary" id="filterButton">
+                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                SOLO Gryffindor
+            </button>
         </form>
+        <script>
+            document.getElementById("filterButton").addEventListener("click", function() {
+                let spinner = document.getElementById("spinner");
+                spinner.classList.remove("d-none"); // Muestra el spinner
+            });
+        </script>
 
         <form method="post" action="{% url 'filter_by_house' %}">
             {% csrf_token %}
