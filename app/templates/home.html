@@ -43,11 +43,25 @@
             });
         </script>
 
-        <form method="post" action="{% url 'filter_by_house' %}">
+        <form method="post" action="{% url 'filter_by_house' %}" id="filterForm">
             {% csrf_token %}
             <input type="hidden" name="house" value="Slytherin">
-            <button type="submit" class="btn btn-danger">SOLO Slytherin</button>
+    
+            <button type="submit" class="btn btn-danger" id="filterButton">
+                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                SOLO Slytherin
+            </button>
         </form>
+        <script>
+            document.getElementById("filterForm").addEventListener("submit", function() {
+                let btn = document.getElementById("filterButton");
+                let spinner = document.getElementById("spinner");
+        
+                // Deshabilita el botón y muestra el spinner
+                btn.disabled = true;
+                spinner.classList.remove("d-none");
+            });
+        </script>
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
